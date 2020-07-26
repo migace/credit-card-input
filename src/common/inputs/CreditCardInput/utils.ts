@@ -1,3 +1,5 @@
+import { KeyboardEvent } from "react";
+
 import { CARD_TYPES, DEFAULT_CARD_FORMAT } from "./consts";
 
 interface ICardData {
@@ -19,10 +21,19 @@ export const CARD_DATA: ICardData[] = [
     },
 ];
 
-export const getCardType = (cardNmuber: string): CARD_TYPES => {
-    const cardInfo = Object.values(CARD_DATA).find((card) => card.startPattern.test(cardNmuber));
+const getCardData = (cardNumber: string): ICardData | undefined =>
+    Object.values(CARD_DATA).find((card) => card.startPattern.test(cardNumber));
+
+export const getCardType = (cardNumber: string): CARD_TYPES => {
+    const cardInfo = getCardData(cardNumber);
 
     return cardInfo?.type || CARD_TYPES.NONE;
+};
+
+export const hasReachedMaximumLength = (cardNumber: string): boolean => {
+    const maxCardNumberLength = getCardData(cardNumber)?.maxCardNumberLength;
+
+    return maxCardNumberLength ? cardNumber.length >= maxCardNumberLength : false;
 };
 
 export const formatCardNumber = (cardNumber: string): string => {
@@ -30,3 +41,5 @@ export const formatCardNumber = (cardNumber: string): string => {
 
     return matchedCardNumber ? matchedCardNumber.join(" ") : cardNumber;
 };
+
+export const isNumeric = (value: string): boolean => /^\d*$/.test(value);
