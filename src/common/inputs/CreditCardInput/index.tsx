@@ -31,8 +31,16 @@ export const CreditCardInput: React.FC = () => {
             setMessage(validateExpiryDate(creditCardExpiryDate.split(" / ").join("/")));
         }
 
-        if (payment.fns.validateCardNumber(creditCardNumber) && creditCardExpiryDateRef.current) {
+        if (
+            hasReachedMaximumLength(creditCardNumber.split(" ").join("")) &&
+            payment.fns.validateCardNumber(creditCardNumber) &&
+            creditCardExpiryDateRef.current
+        ) {
             creditCardExpiryDateRef.current.focus();
+        } else if (hasReachedMaximumLength(creditCardNumber.split(" ").join(""))) {
+            setMessage("Credit card number is invalid");
+        } else {
+            setMessage("");
         }
 
         if (validateExpiryDate(creditCardExpiryDate.split(" / ").join("/")) === "" && creditCardCVCRef.current) {
