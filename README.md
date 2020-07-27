@@ -9,6 +9,10 @@ I coverage my code with unit tests using [Jest](https://jestjs.io/) and [React T
 
 **Credit card types supported:** MasterCard and Visa
 
+### Quick run
+
+In the project directory, you should run `npm install && npm start`
+
 ## Available Scripts
 
 In the project directory, you can run:
