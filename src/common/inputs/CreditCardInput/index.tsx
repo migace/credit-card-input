@@ -34,7 +34,7 @@ export const CreditCardInput: React.FC = () => {
     };
 
     const creditCardNumberKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) =>
-        (!isNumeric(e.key) || hasReachedMaximumLength(credictCardNumber)) && e.preventDefault();
+        (!isNumeric(e.key) || hasReachedMaximumLength(credictCardNumber.split(" ").join(""))) && e.preventDefault();
 
     const creditCardExpiryDateOnChangeHandler = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) =>
         setCreditCardExpiryDate(formatExpiryDate(value));
