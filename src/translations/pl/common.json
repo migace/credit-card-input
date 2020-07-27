@@ -1,6 +1,7 @@
 {
     "app": {
         "title": "Zadanie rekrutacyjne",
-        "card-number": "Numer karty"
+        "card-number": "Numer karty",
+        "expiryDatePlaceholder": "MM / RR"
     }
 }

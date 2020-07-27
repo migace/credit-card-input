@@ -1,4 +1,4 @@
-import { formatCardNumber, getCardType, hasReachedMaximumLength, isNumeric } from "./utils";
+import { formatCardNumber, formatExpiryDate, getCardType, hasReachedMaximumLength, isNumeric } from "./utils";
 import { CARD_TYPES } from "./consts";
 
 describe("getCardType()", () => {
@@ -67,5 +67,23 @@ describe("hasReachedMaximumLength()", () => {
 describe("formatCardNumber()", () => {
     it("should return format credit card number - xxxx xxxx xxxx xxxx", () => {
         expect(formatCardNumber("123456789000")).toBe("1234 5678 9000");
+    });
+});
+
+describe("formatExpiryDate()", () => {
+    it("should add 0 prefix for 1-9 month", () => {
+        expect(formatExpiryDate("1/")).toEqual("01 / ");
+    });
+
+    it("should add space before and after '/' char", () => {
+        expect(formatExpiryDate("11/22")).toEqual("11 / 22");
+    });
+
+    it("should return empty string if data is in bad format", () => {
+        expect(formatExpiryDate("aaaa")).toEqual("");
+    });
+
+    it("should return empty string if data has two 0", () => {
+        expect(formatExpiryDate("00")).toEqual("");
     });
 });

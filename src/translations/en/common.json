@@ -1,6 +1,7 @@
 {
     "app": {
         "title": "Recruitment task",
-        "card-number": "Card number"
+        "card-number": "Card number",
+        "expiryDatePlaceholder": "MM / YY"
     }
 }

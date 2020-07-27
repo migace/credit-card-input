@@ -13,9 +13,21 @@ export const CreditCardNumberWrapperStyled = styled.div`
     display: flex;
 `;
 
-export const CreditCardNumberInputStyled = styled.input`
+export const CreditCardInputStyled = styled.input`
     height: 30px;
-    padding-left: 40px;
+    border: 0;
+    width: 55px;
+
+    &:focus {
+        outline: 0;
+    }
+`;
+
+export const CreditCardNumberInputStyled = styled(CreditCardInputStyled)`
+    padding-left: 45px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    width: auto;
 `;
 
 export const CardTypeStyled = styled.img`

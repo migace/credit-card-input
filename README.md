@@ -2,7 +2,7 @@
 
 This project was made as a recruitment task. The goal was made a credit card component with a credit number field,
 an expiry date field, and CVC field. Additional options are show images for credit card type based on credit number.
-I used [create-react-app](https://github.com/facebook/create-react-app) as setup env. I used [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to improve code quality.
+I used [create-react-app](https://github.com/facebook/create-react-app) as setup env. I used [react-i18next](https://github.com/i18next/react-i18next) for translations. I used too [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to improve code quality.
 I coverage my code with unit tests using [Jest](https://jestjs.io/) and [React Testing Library](https://github.com/testing-library/react-testing-library).
 
 ## Available Scripts

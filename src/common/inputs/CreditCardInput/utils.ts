@@ -42,4 +42,49 @@ export const formatCardNumber = (cardNumber: string): string => {
     return matchedCardNumber ? matchedCardNumber.join(" ") : cardNumber;
 };
 
+export const formatExpiryDate = (expiryDate: string): string => {
+    const normalizedExpiryDate = expiryDate.split(" / ").join("/");
+
+    if (!normalizedExpiryDate) {
+        return "";
+    }
+
+    let copyNormalizedExpiryDate = normalizedExpiryDate;
+    if (/^[2-9]$/.test(normalizedExpiryDate)) {
+        copyNormalizedExpiryDate = `0${copyNormalizedExpiryDate}`;
+    }
+
+    if (normalizedExpiryDate.length === 2 && +normalizedExpiryDate > 12) {
+        const [head, ...tail] = normalizedExpiryDate;
+        copyNormalizedExpiryDate = `0${head}/${tail.join("")}`;
+    }
+
+    if (/^1[/-]$/.test(copyNormalizedExpiryDate)) {
+        return `01 / `;
+    }
+
+    if (/^00$/.test(copyNormalizedExpiryDate)) {
+        return "";
+    }
+
+    const macthedExpiryDate = copyNormalizedExpiryDate.match(/(\d{1,2})/g) || [];
+    console.log("dwdwdw", macthedExpiryDate);
+    debugger;
+    if (macthedExpiryDate.length === 1) {
+        if (normalizedExpiryDate.includes("/")) {
+            return macthedExpiryDate[0];
+        }
+
+        if (/\d{2}/.test(copyNormalizedExpiryDate)) {
+            return `${macthedExpiryDate[0]} / `;
+        }
+    }
+    if (macthedExpiryDate.length > 2) {
+        const [, month, year] = macthedExpiryDate.join("").match(/^(\d{2}).*(\d{2})$/) || [];
+        return [month, year].join(" / ");
+    }
+
+    return macthedExpiryDate.join(" / ");
+};
+
 export const isNumeric = (value: string): boolean => /^\d*$/.test(value);
