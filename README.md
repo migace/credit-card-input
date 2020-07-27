@@ -5,6 +5,8 @@ an expiry date field, and CVC field. Additional options are show images for cred
 I used [create-react-app](https://github.com/facebook/create-react-app) as setup env. I used [react-i18next](https://github.com/i18next/react-i18next) for translations. I used too [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to improve code quality.
 I coverage my code with unit tests using [Jest](https://jestjs.io/) and [React Testing Library](https://github.com/testing-library/react-testing-library).
 
+**Credit card types supported:** MasterCard and Visa
+
 ## Available Scripts
 
 In the project directory, you can run:

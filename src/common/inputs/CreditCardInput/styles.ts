@@ -17,6 +17,7 @@ export const CreditCardInputStyled = styled.input`
     height: 30px;
     border: 0;
     width: 55px;
+    padding-left: 25px;
 
     &:focus {
         outline: 0;

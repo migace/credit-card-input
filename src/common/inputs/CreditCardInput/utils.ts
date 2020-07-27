@@ -7,6 +7,7 @@ import {
     DATE_OUT_OF_RANGE,
     EXPIRY_DATE_REGEX,
     MONTH_REGEX,
+    DEFAULT_CVC_LENGTH,
 } from "./consts";
 
 interface ICardData {
@@ -42,6 +43,8 @@ export const hasReachedMaximumLength = (cardNumber: string): boolean => {
 
     return maxCardNumberLength ? cardNumber.length >= maxCardNumberLength : false;
 };
+
+export const hasCVCReachedMaxLength = (cvc: string): boolean => cvc.length >= DEFAULT_CVC_LENGTH;
 
 export const formatCardNumber = (cardNumber: string): string => {
     const matchedCardNumber = cardNumber.match(DEFAULT_CARD_FORMAT);
