@@ -1,5 +1,7 @@
 # CreditCardInput
 
+![credit-card](https://user-images.githubusercontent.com/7611776/88530245-5f431d00-d001-11ea-90e8-6c251713140b.png)
+
 This project was made as a recruitment task. The goal was made a credit card component with a credit number field,
 an expiry date field, and CVC field. Additional options are show images for credit card type based on credit number.
 I used [create-react-app](https://github.com/facebook/create-react-app) as setup env. I used [react-i18next](https://github.com/i18next/react-i18next) for translations. I used too [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to improve code quality.
