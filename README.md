@@ -11,7 +11,7 @@ I coverage my code with unit tests using [Jest](https://jestjs.io/) and [React T
 
 ## Quick run
 
-In the project directory, you should run `npm install && npm start`
+In the project directory, you should run `npm install && npm start`. Open http://localhost:3000 to view it in the browser
 
 ## Available Scripts
 
