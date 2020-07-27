@@ -37,3 +37,9 @@ export const CardTypeStyled = styled.img`
     transform: translateY(-50%);
     height: 20px;
 `;
+
+export const MessagesStyled = styled.div`
+    color: #ff0000;
+    font-size: 10px;
+    padding: 0 5px;
+`;

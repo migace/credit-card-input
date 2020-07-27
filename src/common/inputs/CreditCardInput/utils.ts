@@ -1,6 +1,13 @@
-import { KeyboardEvent } from "react";
-
-import { CARD_TYPES, DEFAULT_CARD_FORMAT } from "./consts";
+import {
+    CARD_TYPES,
+    DEFAULT_CARD_FORMAT,
+    INVALID_EXPIRY_DATE,
+    MONTH_OUT_OF_RANGE,
+    YEAR_OUT_OF_RANGE,
+    DATE_OUT_OF_RANGE,
+    EXPIRY_DATE_REGEX,
+    MONTH_REGEX,
+} from "./consts";
 
 interface ICardData {
     type: CARD_TYPES;
@@ -68,8 +75,7 @@ export const formatExpiryDate = (expiryDate: string): string => {
     }
 
     const macthedExpiryDate = copyNormalizedExpiryDate.match(/(\d{1,2})/g) || [];
-    console.log("dwdwdw", macthedExpiryDate);
-    debugger;
+
     if (macthedExpiryDate.length === 1) {
         if (normalizedExpiryDate.includes("/")) {
             return macthedExpiryDate[0];
@@ -88,3 +94,35 @@ export const formatExpiryDate = (expiryDate: string): string => {
 };
 
 export const isNumeric = (value: string): boolean => /^\d*$/.test(value);
+
+export const validateExpiryDate = (expiryDate: string): string => {
+    const splitDate = expiryDate.split("/");
+
+    if (!EXPIRY_DATE_REGEX.test(expiryDate)) {
+        return INVALID_EXPIRY_DATE;
+    }
+
+    const expiryMonth = splitDate[0];
+
+    if (!MONTH_REGEX.test(expiryMonth)) {
+        return MONTH_OUT_OF_RANGE;
+    }
+
+    const expiryYear = splitDate[1];
+    const date = new Date();
+    const currentMonth = date.getMonth() + 1;
+    const currentYear = parseInt(
+        expiryYear.length === 4 ? date.getFullYear().toString() : date.getFullYear().toString().substr(-2),
+        10,
+    );
+
+    if (currentYear > parseInt(expiryYear, 10)) {
+        return YEAR_OUT_OF_RANGE;
+    }
+
+    if (parseInt(expiryYear, 10) === currentYear && parseInt(expiryMonth, 10) < currentMonth) {
+        return DATE_OUT_OF_RANGE;
+    }
+
+    return "";
+};

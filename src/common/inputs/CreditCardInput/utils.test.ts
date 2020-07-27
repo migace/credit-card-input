@@ -1,5 +1,12 @@
-import { formatCardNumber, formatExpiryDate, getCardType, hasReachedMaximumLength, isNumeric } from "./utils";
-import { CARD_TYPES } from "./consts";
+import {
+    formatCardNumber,
+    formatExpiryDate,
+    getCardType,
+    hasReachedMaximumLength,
+    isNumeric,
+    validateExpiryDate,
+} from "./utils";
+import { CARD_TYPES, INVALID_EXPIRY_DATE, MONTH_OUT_OF_RANGE, YEAR_OUT_OF_RANGE, DATE_OUT_OF_RANGE } from "./consts";
 
 describe("getCardType()", () => {
     it("should return CARD_TYPES.NONE if cardNumber doesn't match to defined card types", () => {
@@ -85,5 +92,36 @@ describe("formatExpiryDate()", () => {
 
     it("should return empty string if data has two 0", () => {
         expect(formatExpiryDate("00")).toEqual("");
+    });
+});
+
+describe("validateExpiryDate()", () => {
+    it("should return 'Expiry date is invalid' if date is not correct format - xx/xx", () => {
+        expect(validateExpiryDate("12 / 12")).toEqual(INVALID_EXPIRY_DATE);
+    });
+
+    it("should return 'Expiry month must be between 01 and 12' if month is less than 01 or greater than 12", () => {
+        expect(validateExpiryDate("00/22")).toEqual(MONTH_OUT_OF_RANGE);
+        expect(validateExpiryDate("13/22")).toEqual(MONTH_OUT_OF_RANGE);
+    });
+
+    it("should return 'Expiry year cannot be in the past' if year is in the past", () => {
+        const pastYear = (new Date().getFullYear() - 2).toString().slice(-2);
+
+        expect(validateExpiryDate(`01/${pastYear}`)).toEqual(YEAR_OUT_OF_RANGE);
+    });
+
+    it("should return 'Expiry date cannot be in the past' if date is in the past", () => {
+        const currentYear = new Date().getFullYear().toString().slice(-2);
+        const pastMonth = ("0" + new Date().getMonth()).slice(-2);
+
+        expect(validateExpiryDate(`${pastMonth}/${currentYear}`)).toEqual(DATE_OUT_OF_RANGE);
+    });
+
+    it("should return empty string if date is valid", () => {
+        const currentYear = new Date().getFullYear().toString().slice(-2);
+        const currentMonth = ("0" + (new Date().getMonth() + 1)).slice(-2);
+
+        expect(validateExpiryDate(`${currentMonth}/${currentYear}`)).toEqual("");
     });
 });
