@@ -13,7 +13,7 @@ export const CARD_IMAGES = Object.freeze({
 });
 export const DEFAULT_CARD_FORMAT = /(\d{1,4})/g;
 export const DEFAULT_CVC_LENGTH = 3;
-export const DEFAULT_EXPIRY_DATE_LENGTH = 7;
+export const DEFAULT_EXPIRY_DATE_LENGTH = 5;
 export const INVALID_EXPIRY_DATE = "Expiry date is invalid";
 export const MONTH_OUT_OF_RANGE = "Expiry month must be between 01 and 12";
 export const YEAR_OUT_OF_RANGE = "Expiry year cannot be in the past";

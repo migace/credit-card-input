@@ -30,4 +30,4 @@ This app is ready to be deployed!
 
 ### TODO
 
-[ ] Add auto focus next input after filling
+[x] Add auto focus next input after filling

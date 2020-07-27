@@ -8,6 +8,8 @@ type CreditCardCVCProps = {
     value: string;
 };
 
-export const CreditCardCVC: React.FC<CreditCardCVCProps> = ({ onChange, onKeyPress, value }) => (
-    <CreditCardInputStyled placeholder="CVC" onChange={onChange} onKeyPress={onKeyPress} value={value} />
+export const CreditCardCVC = React.forwardRef<HTMLInputElement, CreditCardCVCProps>(
+    ({ onChange, onKeyPress, value }, ref) => (
+        <CreditCardInputStyled ref={ref} placeholder="CVC" onChange={onChange} onKeyPress={onKeyPress} value={value} />
+    ),
 );

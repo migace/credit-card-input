@@ -1,4 +1,5 @@
-import React, { ChangeEvent, KeyboardEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, KeyboardEvent, useState, useEffect, useRef } from "react";
+import payment from "payment";
 
 import { CreditCardNumber } from "./CreditCardNumber";
 import { CreditCardExpiryDate } from "./CreditCardExpiryDate";
@@ -10,34 +11,50 @@ import {
     getCardType,
     hasReachedMaximumLength,
     hasCVCReachedMaxLength,
+    hasExpiryDateReachedMaxLength,
     isNumeric,
     validateExpiryDate,
 } from "./utils";
 import { CARD_TYPES, DEFAULT_EXPIRY_DATE_LENGTH } from "./consts";
 
 export const CreditCardInput: React.FC = () => {
-    const [credictCardNumber, setCreditCardNumber] = useState("");
+    const [creditCardNumber, setCreditCardNumber] = useState("");
     const [creditCardExpiryDate, setCreditCardExpiryDate] = useState("");
     const [creditCardCVC, setCreditCardCVC] = useState("");
     const [message, setMessage] = useState("");
     const [cardType, setCardType] = useState(CARD_TYPES.NONE);
+    const creditCardExpiryDateRef = useRef<HTMLInputElement>(null);
+    const creditCardCVCRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (creditCardExpiryDate.length === DEFAULT_EXPIRY_DATE_LENGTH) {
+        if (creditCardExpiryDate.split(" / ").join("/").length === DEFAULT_EXPIRY_DATE_LENGTH) {
             setMessage(validateExpiryDate(creditCardExpiryDate.split(" / ").join("/")));
         }
-    }, [creditCardExpiryDate]);
+
+        if (payment.fns.validateCardNumber(creditCardNumber) && creditCardExpiryDateRef.current) {
+            creditCardExpiryDateRef.current.focus();
+        }
+
+        if (validateExpiryDate(creditCardExpiryDate.split(" / ").join("/")) === "" && creditCardCVCRef.current) {
+            creditCardCVCRef.current.focus();
+        }
+    }, [creditCardNumber, creditCardExpiryDate]);
 
     const creditCardNumberOnChangeHandler = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+        const formattedCardNumber = formatCardNumber(value);
+
         setCardType(getCardType(value));
-        setCreditCardNumber(formatCardNumber(value));
+        setCreditCardNumber(formattedCardNumber);
     };
 
     const creditCardNumberKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) =>
-        (!isNumeric(e.key) || hasReachedMaximumLength(credictCardNumber.split(" ").join(""))) && e.preventDefault();
+        (!isNumeric(e.key) || hasReachedMaximumLength(creditCardNumber.split(" ").join(""))) && e.preventDefault();
 
     const creditCardExpiryDateOnChangeHandler = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) =>
         setCreditCardExpiryDate(formatExpiryDate(value));
+
+    const creditCardExpiryDateKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) =>
+        hasExpiryDateReachedMaxLength(creditCardExpiryDate) && e.preventDefault();
 
     const creditCardCVCOnChangeHandler = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) =>
         setCreditCardCVC(value);
@@ -50,12 +67,18 @@ export const CreditCardInput: React.FC = () => {
             <WrapperStyled>
                 <CreditCardNumber
                     cardType={cardType}
-                    value={credictCardNumber}
+                    value={creditCardNumber}
                     onChange={creditCardNumberOnChangeHandler}
                     onKeyPress={creditCardNumberKeyPressHandler}
                 />
-                <CreditCardExpiryDate value={creditCardExpiryDate} onChange={creditCardExpiryDateOnChangeHandler} />
+                <CreditCardExpiryDate
+                    ref={creditCardExpiryDateRef}
+                    value={creditCardExpiryDate}
+                    onChange={creditCardExpiryDateOnChangeHandler}
+                    onKeyPress={creditCardExpiryDateKeyPressHandler}
+                />
                 <CreditCardCVC
+                    ref={creditCardCVCRef}
                     value={creditCardCVC}
                     onChange={creditCardCVCOnChangeHandler}
                     onKeyPress={creditCardCVCKeyPressHandler}

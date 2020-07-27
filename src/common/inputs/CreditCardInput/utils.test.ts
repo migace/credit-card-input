@@ -5,6 +5,7 @@ import {
     hasReachedMaximumLength,
     isNumeric,
     validateExpiryDate,
+    hasExpiryDateReachedMaxLength,
 } from "./utils";
 import { CARD_TYPES, INVALID_EXPIRY_DATE, MONTH_OUT_OF_RANGE, YEAR_OUT_OF_RANGE, DATE_OUT_OF_RANGE } from "./consts";
 
@@ -123,5 +124,16 @@ describe("validateExpiryDate()", () => {
         const currentMonth = ("0" + (new Date().getMonth() + 1)).slice(-2);
 
         expect(validateExpiryDate(`${currentMonth}/${currentYear}`)).toEqual("");
+    });
+});
+
+describe("hasExpiryDateReachedMaxLength()", () => {
+    it("should return false if expiry date has less than maximum length", () => {
+        expect(hasExpiryDateReachedMaxLength("01/2")).toEqual(false);
+    });
+
+    it("should return true if expiry date has greater or equal maximum length", () => {
+        expect(hasExpiryDateReachedMaxLength("01 / 22")).toEqual(true);
+        expect(hasExpiryDateReachedMaxLength("01/22")).toEqual(true);
     });
 });

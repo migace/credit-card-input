@@ -8,6 +8,7 @@ import {
     EXPIRY_DATE_REGEX,
     MONTH_REGEX,
     DEFAULT_CVC_LENGTH,
+    DEFAULT_EXPIRY_DATE_LENGTH,
 } from "./consts";
 
 interface ICardData {
@@ -43,6 +44,8 @@ export const hasReachedMaximumLength = (cardNumber: string): boolean => {
 
     return maxCardNumberLength ? cardNumber.length >= maxCardNumberLength : false;
 };
+
+export const hasExpiryDateReachedMaxLength = (cvc: string): boolean => cvc.length >= DEFAULT_EXPIRY_DATE_LENGTH;
 
 export const hasCVCReachedMaxLength = (cvc: string): boolean => cvc.length >= DEFAULT_CVC_LENGTH;
 
